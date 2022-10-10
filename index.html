@@ -12,10 +12,15 @@
             border: 1px dotted;
             height: 112px;
             width: 63px;
+            position: relative;
         }
-        #small{
+        .small{
             height: 112px;
             width: 63px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
         }
 
         /* 大图区域 */
@@ -44,7 +49,19 @@
 
 <!-- 小图 -->
 <div id="div1">
-    <img src="./he_webp/He1.webp" id="small"/>
+    <img src="./he_webp/He1.webp" id="small1" class="small"/>
+    <img src="./he_webp/He2.webp" id="small2" class="small"/>
+    <img src="./he_webp/He3.webp" id="small3" class="small"/>
+    <img src="./he_webp/He4.webp" id="small4" class="small"/>
+    <img src="./he_webp/He5.webp" id="small5" class="small"/>
+    <img src="./he_webp/He6.webp" id="small6" class="small"/>
+    <img src="./he_webp/He7.webp" id="small7" class="small"/>
+    <img src="./he_webp/He8.webp" id="small8" class="small"/>
+    <img src="./he_webp/He9.webp" id="small9" class="small"/>
+    <img src="./he_webp/He10.webp" id="small10" class="small"/>
+    <img src="./he_webp/He11.webp" id="small11" class="small"/>
+    <img src="./he_webp/He12.webp" id="small12" class="small"/>
+    <img src="./he_webp/He13.webp" id="small13" class="small"/>
 </div>
 
 <!-- 开始和结束按钮 -->
@@ -68,18 +85,24 @@
 
     //显示小图
     let webpCount = 13;
-    let count = 0;
-    let tiem = null;
-    let webpSrc = "";
-    $("#startBtn").click(function(){
+    let count = 1;
+    let time = null;
+    let oldImg = "#small1";
+    let newImg = "#small2";
+    $(oldImg).css("opacity", 1);
+    $("#startBtn").click(function () {
         $(this).prop("disabled", true);
         $("#stopBtn").prop("disabled", false);
-        time = setInterval(function(){
+        time = setInterval(function () {
+            // 每次将将新的img标签替换上一次的img标签
+            $(oldImg).css("opacity", 0);
+            $(newImg).css("opacity", 1);
+            //更新要显示的标签
+            oldImg = newImg;
+            count++;
             let num = count % webpCount + 1;
-            webpSrc = "./he_webp/He" + num + ".webp";
-            $("#small").attr("src", webpSrc);
-            count ++;
-        }, 80);
+            newImg = "#small" + num;  
+        }, 100);
         $("#startAudio").prop("muted", false);
         $("#startAudio")[0].play();
     });
@@ -89,7 +112,7 @@
         clearInterval(time);
         $("#startBtn").prop("disabled", false);
         $(this).prop("disabled", true);
-        $("#big").attr("src",webpSrc);
+        $("#big").attr("src",$(newImg).attr("src"));
         $("#big").css("display", "block")
         $("#startAudio")[0].pause();
         $("#stopAudio").prop("muted", false);
