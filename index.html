@@ -112,7 +112,7 @@
         clearInterval(time);
         $("#startBtn").prop("disabled", false);
         $(this).prop("disabled", true);
-        $("#big").attr("src",$(newImg).attr("src"));
+        $("#big").attr("src",$(oldImg).attr("src"));
         $("#big").css("display", "block")
         $("#startAudio")[0].pause();
         $("#stopAudio").prop("muted", false);
